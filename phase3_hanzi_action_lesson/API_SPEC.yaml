@@ -1,0 +1,215 @@
+openapi: 3.0.3
+info:
+  title: Moyuan Hanzi Action Lesson API
+  version: 1.0.0
+  description: |
+    第三部分：汉字“声像行动课”最小接口集。
+servers:
+  - url: https://api.moyuan.local
+
+paths:
+  /hanzi/lesson-sessions:
+    post:
+      summary: 创建汉字课堂会话
+      operationId: createHanziLessonSession
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [lesson_pack_id, teacher_id, class_id, grade_band]
+              properties:
+                lesson_pack_id:
+                  type: string
+                teacher_id:
+                  type: string
+                class_id:
+                  type: string
+                grade_band:
+                  type: string
+                  enum: [P1-P3]
+      responses:
+        '201':
+          description: Created
+
+  /hanzi/lesson-attempts:
+    post:
+      summary: 提交学生互动并返回即时反馈
+      operationId: submitHanziAttempt
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LearnerHanziAttempt'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [is_correct, feedback, next_prompt, difficulty_level]
+                properties:
+                  is_correct:
+                    type: boolean
+                  feedback:
+                    type: string
+                  next_prompt:
+                    type: string
+                  difficulty_level:
+                    type: string
+                    enum: [easy, normal, reduced]
+
+  /hanzi/lesson-reports/{session_id}:
+    get:
+      summary: 获取课堂报告
+      operationId: getHanziLessonReport
+      parameters:
+        - in: path
+          name: session_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HanziSessionReport'
+
+  /hanzi/animation-preview:
+    post:
+      summary: 生成或预览单字变换动画
+      operationId: previewCharacterAnimation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [char_id, target_char, grade_band]
+              properties:
+                char_id:
+                  type: string
+                target_char:
+                  type: string
+                grade_band:
+                  type: string
+                style:
+                  type: string
+                  enum: [ink_minimal, colorful_kids]
+                  default: colorful_kids
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [preview_url, duration_sec]
+                properties:
+                  preview_url:
+                    type: string
+                  duration_sec:
+                    type: integer
+
+components:
+  schemas:
+    CharacterAnimationPack:
+      type: object
+      required: [char_id, target_char, grade_band, story_script, morph_frames, key_concept, example_words]
+      properties:
+        char_id:
+          type: string
+        target_char:
+          type: string
+        grade_band:
+          type: string
+        story_script:
+          type: string
+        morph_frames:
+          type: array
+          items:
+            type: object
+            required: [frame_no, visual_desc, narration]
+            properties:
+              frame_no:
+                type: integer
+              visual_desc:
+                type: string
+              narration:
+                type: string
+        key_concept:
+          type: string
+        example_words:
+          type: array
+          items:
+            type: string
+
+    HanziLessonNode:
+      type: object
+      required: [node_id, char_id, node_type, prompt, expected_output, fallback_options]
+      properties:
+        node_id:
+          type: string
+        char_id:
+          type: string
+        node_type:
+          type: string
+          enum: [animation, recognize, match, apply, recap]
+        prompt:
+          type: string
+        expected_output:
+          type: string
+        fallback_options:
+          type: array
+          minItems: 2
+          maxItems: 3
+          items:
+            type: string
+
+    LearnerHanziAttempt:
+      type: object
+      required: [session_id, student_id, char_id, input_mode, response]
+      properties:
+        session_id:
+          type: string
+        student_id:
+          type: string
+        char_id:
+          type: string
+        input_mode:
+          type: string
+          enum: [tap, voice]
+        response:
+          type: string
+        accuracy:
+          type: number
+          format: float
+        response_time_ms:
+          type: integer
+
+    HanziSessionReport:
+      type: object
+      required: [session_id, retention_score, confusion_pairs, mastered_chars, next_focus_chars]
+      properties:
+        session_id:
+          type: string
+        retention_score:
+          type: number
+          format: float
+        confusion_pairs:
+          type: array
+          items:
+            type: string
+        mastered_chars:
+          type: array
+          items:
+            type: string
+        next_focus_chars:
+          type: array
+          items:
+            type: string

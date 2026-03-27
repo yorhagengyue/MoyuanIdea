@@ -1,0 +1,115 @@
+{
+  "pack_id": "hanzi_action_p1p3_v1",
+  "title": "汉字声像行动课 12字样板",
+  "grade_band": "P1-P3",
+  "focus_strategy": "象形+形声混合",
+  "target_chars": ["犬", "犭", "人", "亻", "水", "氵", "手", "扌", "木", "口", "山", "日"],
+  "lesson_nodes": [
+    {
+      "node_id": "n01",
+      "char_id": "犬",
+      "node_type": "animation",
+      "prompt": "看动画：从小狗形象到“犬”字。",
+      "expected_output": "孩子说出“犬”和狗有关",
+      "fallback_options": ["像小狗", "像大山", "像太阳"]
+    },
+    {
+      "node_id": "n02",
+      "char_id": "犭",
+      "node_type": "match",
+      "prompt": "把“犭”偏旁和动物词配对。",
+      "expected_output": "至少配对1个正确",
+      "fallback_options": ["狗", "水", "火"]
+    },
+    {
+      "node_id": "n03",
+      "char_id": "人",
+      "node_type": "animation",
+      "prompt": "看“人”字如何从站立的人形演变而来。",
+      "expected_output": "孩子说出“人”的形象来源",
+      "fallback_options": ["站着的人", "流水", "树木"]
+    },
+    {
+      "node_id": "n04",
+      "char_id": "亻",
+      "node_type": "apply",
+      "prompt": "说出一个带“亻”的字。",
+      "expected_output": "说出如“你、他、住”等",
+      "fallback_options": ["你", "山", "日"]
+    },
+    {
+      "node_id": "n05",
+      "char_id": "水",
+      "node_type": "animation",
+      "prompt": "看“水”字和水流动作的关系。",
+      "expected_output": "孩子指出“水”和流动有关",
+      "fallback_options": ["流动", "站立", "发光"]
+    },
+    {
+      "node_id": "n06",
+      "char_id": "氵",
+      "node_type": "match",
+      "prompt": "选择带“三点水”的字。",
+      "expected_output": "选出至少2个正确",
+      "fallback_options": ["河", "他", "海"]
+    },
+    {
+      "node_id": "n07",
+      "char_id": "手",
+      "node_type": "animation",
+      "prompt": "看“手”字和手部动作的关系。",
+      "expected_output": "孩子说明“手”和动作有关",
+      "fallback_options": ["拿东西", "太阳", "山峰"]
+    },
+    {
+      "node_id": "n08",
+      "char_id": "扌",
+      "node_type": "apply",
+      "prompt": "选出带“扌”的字。",
+      "expected_output": "识别“打、拉、推”等",
+      "fallback_options": ["打", "林", "日"]
+    },
+    {
+      "node_id": "n09",
+      "char_id": "木",
+      "node_type": "recognize",
+      "prompt": "哪个字像树干和树枝？",
+      "expected_output": "识别“木”",
+      "fallback_options": ["木", "口", "人"]
+    },
+    {
+      "node_id": "n10",
+      "char_id": "口",
+      "node_type": "recognize",
+      "prompt": "哪个字像嘴巴的外形？",
+      "expected_output": "识别“口”",
+      "fallback_options": ["山", "口", "日"]
+    },
+    {
+      "node_id": "n11",
+      "char_id": "山",
+      "node_type": "animation",
+      "prompt": "看山峰起伏变成“山”字。",
+      "expected_output": "说出“山”表示高低起伏",
+      "fallback_options": ["山", "水", "火"]
+    },
+    {
+      "node_id": "n12",
+      "char_id": "日",
+      "node_type": "recap",
+      "prompt": "今天你最容易记住哪个字？说一句原因。",
+      "expected_output": "输出1句完整理由",
+      "fallback_options": ["因为像图画", "因为老师说", "不知道"]
+    }
+  ],
+  "assessment_metrics": {
+    "min_interactions_per_student": 8,
+    "target_immediate_accuracy_gain_percent": 20,
+    "report_fields": ["retention_score", "confusion_pairs", "mastered_chars", "next_focus_chars"]
+  },
+  "demo_highlight": {
+    "must_include_morph": "犬->犭",
+    "demo_duration_minutes": 8,
+    "narrative_chain": ["字形变换", "孩子互动", "结果面板"]
+  }
+}

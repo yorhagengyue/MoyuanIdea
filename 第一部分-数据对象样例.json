@@ -1,0 +1,122 @@
+{
+  "childRoleProfile": {
+    "role_id": "role_001",
+    "student_id": "stu_1024",
+    "class_id": "class_a1",
+    "role_name": "小灯笼队长",
+    "identity": "课堂冒险队队长",
+    "personality": "勇敢、爱提问、喜欢鼓励同伴",
+    "catchphrase": "我们先想一想，再试着说完整句子。",
+    "dream_goal": "带着队员完成100次中文任务",
+    "speech_style": "活泼提问型",
+    "visual_tokens": {
+      "theme_color": "orange",
+      "badge": "lantern",
+      "prop": "storybook"
+    },
+    "system_review_status": "passed",
+    "teacher_review_status": "approved",
+    "visibility_scope": "class_only",
+    "created_at": "2026-03-25T15:00:00+08:00"
+  },
+  "learningSkillTree": {
+    "version": "v1",
+    "owner": "teaching_team",
+    "nodes": [
+      {
+        "skill_id": "oral_expression",
+        "name": "口语表达",
+        "levels": [1, 2, 3, 4, 5]
+      },
+      {
+        "skill_id": "sentence_completeness",
+        "name": "句型完整度",
+        "levels": [1, 2, 3, 4, 5]
+      },
+      {
+        "skill_id": "vocabulary_usage",
+        "name": "词汇使用",
+        "levels": [1, 2, 3, 4, 5]
+      },
+      {
+        "skill_id": "grammar_accuracy",
+        "name": "语法准确度",
+        "levels": [1, 2, 3, 4, 5]
+      }
+    ],
+    "editable_by_student": false
+  },
+  "roleMissionSession": {
+    "session_id": "session_3301",
+    "role_id": "role_001",
+    "student_id": "stu_1024",
+    "class_id": "class_a1",
+    "mission_title": "今天你在课堂上画了什么？",
+    "target_skill_id": "sentence_completeness",
+    "dialogue_start_at": "2026-03-25T16:10:00+08:00",
+    "dialogue_end_at": "2026-03-25T16:19:00+08:00",
+    "correction_style": "question_guided",
+    "dialogue_transcript": [
+      {
+        "speaker": "ai",
+        "text": "你今天画了什么？可以试着说完整一点吗？"
+      },
+      {
+        "speaker": "student",
+        "text": "我画山。"
+      },
+      {
+        "speaker": "ai",
+        "text": "如果加上颜色和位置，你会怎么说呢？"
+      },
+      {
+        "speaker": "student",
+        "text": "我今天画了一座绿色的山，在河旁边。"
+      }
+    ],
+    "mission_result": "completed"
+  },
+  "roleProgressCard": {
+    "card_id": "card_9901",
+    "session_id": "session_3301",
+    "role_id": "role_001",
+    "student_id": "stu_1024",
+    "completion_score": 92,
+    "battle_report": "完成了“课堂分享”关卡，能说出完整句子。",
+    "guided_revision": "把“我画山”升级为“我今天画了一座绿色的山，在河旁边”。",
+    "vocabulary_loot": [
+      {
+        "word": "旁边",
+        "student_sentence": "我的画里小树在山旁边。"
+      },
+      {
+        "word": "绿色",
+        "student_sentence": "我用了绿色来画山。"
+      }
+    ],
+    "next_mission": "明天试试用“先...然后...”描述你的绘画步骤。",
+    "generated_at": "2026-03-25T16:19:05+08:00"
+  },
+  "classRoleFeed": {
+    "feed_id": "feed_5501",
+    "class_id": "class_a1",
+    "role_id": "role_001",
+    "student_display_name": "小Q",
+    "teacher_review_status": "approved",
+    "post_type": "mission_progress",
+    "post_summary": "小灯笼队长今天完成课堂分享关卡。",
+    "visible_fields": [
+      "role_name",
+      "mission_title",
+      "battle_report",
+      "next_mission"
+    ],
+    "hidden_fields": [
+      "full_transcript",
+      "sensitive_personal_data"
+    ],
+    "likes": 6,
+    "encouragement_count": 3,
+    "created_at": "2026-03-25T16:30:00+08:00"
+  }
+}

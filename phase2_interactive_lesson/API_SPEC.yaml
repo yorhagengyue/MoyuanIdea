@@ -1,0 +1,229 @@
+openapi: 3.0.3
+info:
+  title: Moyuan Interactive Lesson Engine API
+  version: 1.0.0
+  description: |
+    低龄图片互动课 AI 引擎最小接口集。
+servers:
+  - url: https://api.moyuan.local
+paths:
+  /lesson-sessions:
+    post:
+      summary: 创建课堂会话
+      operationId: createLessonSession
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [lesson_pack_id, teacher_id, class_id]
+              properties:
+                lesson_pack_id:
+                  type: string
+                teacher_id:
+                  type: string
+                class_id:
+                  type: string
+                expected_students:
+                  type: integer
+                  minimum: 1
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [session_id, started_at]
+                properties:
+                  session_id:
+                    type: string
+                  started_at:
+                    type: string
+                    format: date-time
+
+  /lesson-turns:
+    post:
+      summary: 提交孩子输入并返回 AI 包装回复
+      operationId: submitLearnerTurn
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LearnerTurn'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AiResponseEnvelope'
+
+  /lesson-fallback:
+    post:
+      summary: 触发降级选项（点选模式）
+      operationId: triggerFallback
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [session_id, node_id, reason]
+              properties:
+                session_id:
+                  type: string
+                node_id:
+                  type: string
+                reason:
+                  type: string
+                  enum: [low_confidence, off_topic, network_timeout, teacher_manual]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [fallback_options]
+                properties:
+                  fallback_options:
+                    type: array
+                    minItems: 2
+                    maxItems: 3
+                    items:
+                      type: string
+
+  /lesson-reports/{session_id}:
+    get:
+      summary: 获取课堂报告
+      operationId: getLessonReport
+      parameters:
+        - in: path
+          name: session_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [session_id, participation_rate, vocabulary_mastery, expression_samples, next_lesson_suggestion]
+                properties:
+                  session_id:
+                    type: string
+                  participation_rate:
+                    type: number
+                    format: float
+                  vocabulary_mastery:
+                    type: object
+                    additionalProperties:
+                      type: number
+                  expression_samples:
+                    type: array
+                    items:
+                      type: string
+                  next_lesson_suggestion:
+                    type: string
+
+components:
+  schemas:
+    LessonPack:
+      type: object
+      required: [id, theme, age_band, learning_goals, assets, nodes, teacher_script]
+      properties:
+        id:
+          type: string
+        theme:
+          type: string
+        age_band:
+          type: string
+          example: 7-9
+        learning_goals:
+          type: array
+          items:
+            type: string
+        assets:
+          type: array
+          items:
+            type: object
+            required: [asset_id, type, uri]
+            properties:
+              asset_id:
+                type: string
+              type:
+                type: string
+                enum: [image, audio, prompt_card]
+              uri:
+                type: string
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/InteractiveNode'
+        teacher_script:
+          type: string
+
+    InteractiveNode:
+      type: object
+      required: [node_id, type, prompt, allowed_facts, expected_output]
+      properties:
+        node_id:
+          type: string
+        type:
+          type: string
+          enum: [observe, match, speak, draw, recap]
+        prompt:
+          type: string
+        allowed_facts:
+          type: array
+          items:
+            type: string
+        expected_output:
+          type: string
+
+    LearnerTurn:
+      type: object
+      required: [session_id, student_id, node_id, input_mode, raw_input]
+      properties:
+        session_id:
+          type: string
+        student_id:
+          type: string
+        node_id:
+          type: string
+        input_mode:
+          type: string
+          enum: [voice, tap]
+        raw_input:
+          type: string
+        asr_text:
+          type: string
+        confidence:
+          type: number
+          format: float
+
+    AiResponseEnvelope:
+      type: object
+      required: [response_text, follow_up, fallback_options, safety_flags, latency_ms]
+      properties:
+        response_text:
+          type: string
+        follow_up:
+          type: string
+        fallback_options:
+          type: array
+          minItems: 2
+          maxItems: 3
+          items:
+            type: string
+        safety_flags:
+          type: array
+          items:
+            type: string
+        latency_ms:
+          type: integer

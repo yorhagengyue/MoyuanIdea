@@ -1,0 +1,93 @@
+{
+  "id": "lesson_mountain_terms_v1",
+  "theme": "山的不同叫法",
+  "age_band": "7-9",
+  "duration_minutes": 10,
+  "learning_goals": [
+    "识别词汇：峰、岭、崖、谷",
+    "完成至少一条完整句表达",
+    "实现词义与山形的一一对应"
+  ],
+  "assets": [
+    {
+      "asset_id": "img_mountain_main",
+      "type": "image",
+      "uri": "./图片example/课件4.jpg"
+    }
+  ],
+  "nodes": [
+    {
+      "node_id": "n1_intro",
+      "type": "observe",
+      "prompt": "今天我们来认识山的4个名字：峰、岭、崖、谷。请先看图上每一座山的形状。",
+      "allowed_facts": [
+        "峰通常更尖、更高",
+        "岭更像连绵起伏",
+        "崖常表现为陡直边缘",
+        "谷通常在两侧之间形成低地"
+      ],
+      "expected_output": "孩子能说出至少一个山形特点"
+    },
+    {
+      "node_id": "n2_match",
+      "type": "match",
+      "prompt": "请把词卡拖到你觉得最像的山形上。",
+      "allowed_facts": [
+        "词义匹配要基于形状",
+        "允许孩子先猜再解释"
+      ],
+      "expected_output": "完成至少2个正确匹配"
+    },
+    {
+      "node_id": "n3_speak",
+      "type": "speak",
+      "prompt": "请用完整句说：我觉得这是___，因为它___。",
+      "allowed_facts": [
+        "鼓励先表达再修正",
+        "追问最多两轮"
+      ],
+      "expected_output": "输出一条完整句"
+    },
+    {
+      "node_id": "n4_reinforce",
+      "type": "match",
+      "prompt": "再选一题：下面两张图里，哪一张更像‘崖’？",
+      "allowed_facts": [
+        "崖的关键特征是陡直",
+        "岭的关键特征是连绵"
+      ],
+      "expected_output": "完成一次二选一巩固"
+    },
+    {
+      "node_id": "n5_recap",
+      "type": "recap",
+      "prompt": "今天你最喜欢哪个词？用一句话说给大家听。",
+      "allowed_facts": [
+        "总结时只保留儿童能听懂的短句",
+        "鼓励和肯定优先"
+      ],
+      "expected_output": "完成课堂总结表达"
+    }
+  ],
+  "teacher_script": "导入1分钟-观察3分钟-表达3分钟-巩固2分钟-总结1分钟。若识别置信度低于0.65，立即切换点选模式。",
+  "controlled_improv_rules": {
+    "max_follow_up_rounds": 2,
+    "max_response_sentences": 2,
+    "fallback_on_low_confidence": true,
+    "fallback_on_timeout_seconds": 2.5,
+    "fallback_options_count": 3
+  },
+  "report_template": {
+    "student_summary_fields": [
+      "参与次数",
+      "完成的词汇匹配",
+      "完整句示例"
+    ],
+    "class_summary_fields": [
+      "参与率",
+      "峰/岭/崖/谷掌握度",
+      "典型表达示例",
+      "下节建议"
+    ]
+  }
+}

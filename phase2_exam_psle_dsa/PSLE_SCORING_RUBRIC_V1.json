@@ -1,0 +1,83 @@
+{
+  "version": "v1",
+  "last_updated": "2026-03-25",
+  "score_system": {
+    "official_aligned_total": 50,
+    "strict_internal_total": 100,
+    "score_visibility_mode_default": "teacher_only"
+  },
+  "sections": [
+    {
+      "name": "reading_aloud",
+      "max_score": 20,
+      "sub_criteria": [
+        {
+          "name": "clarity_pronunciation",
+          "max": 8,
+          "deduction_rules": [
+            {"trigger": "unclear_articulation", "deduct": 0.5},
+            {"trigger": "critical_tone_error", "deduct": 0.5}
+          ]
+        },
+        {
+          "name": "fluency_pacing",
+          "max": 6,
+          "deduction_rules": [
+            {"trigger": "pause_over_1_5s", "deduct": 0.5},
+            {"trigger": "repeat_same_phrase", "deduct": 0.5}
+          ]
+        },
+        {
+          "name": "expression_prosody",
+          "max": 6,
+          "deduction_rules": [
+            {"trigger": "flat_reading_or_bad_chunking", "deduct": 0.5}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "conversation",
+      "max_score": 30,
+      "sub_criteria": [
+        {
+          "name": "relevance_task_completion",
+          "max": 10,
+          "deduction_rules": [
+            {"trigger": "off_topic", "deduct": 1.0},
+            {"trigger": "too_short_answer", "deduct": 0.5}
+          ]
+        },
+        {
+          "name": "language_accuracy",
+          "max": 8,
+          "deduction_rules": [
+            {"trigger": "grammar_error", "deduct": 0.5},
+            {"trigger": "word_misuse", "deduct": 0.5}
+          ]
+        },
+        {
+          "name": "content_development",
+          "max": 6,
+          "deduction_rules": [
+            {"trigger": "no_reason_or_example", "deduct": 0.5},
+            {"trigger": "low_information_gain", "deduct": 0.5}
+          ]
+        },
+        {
+          "name": "interaction_quality",
+          "max": 6,
+          "deduction_rules": [
+            {"trigger": "weak_turn_taking", "deduct": 0.5}
+          ]
+        }
+      ]
+    }
+  ],
+  "tier_upgrade_rule": {
+    "strict_score_improvement_min": 12,
+    "official_score_improvement_min": 5,
+    "lessons": 3,
+    "window_days": 4
+  }
+}

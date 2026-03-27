@@ -1,0 +1,159 @@
+openapi: 3.0.3
+info:
+  title: Moyuan Exam System API (PSLE + DSA)
+  version: 1.0.0
+  description: |
+    第二部分“应试系统”最小接口集。
+servers:
+  - url: https://api.moyuan.local
+
+paths:
+  /psle/oral/sessions:
+    post:
+      summary: 创建 PSLE 口语训练会话
+      operationId: createPsleOralSession
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [student_id, mode, lesson_no]
+              properties:
+                student_id:
+                  type: string
+                mode:
+                  type: string
+                  enum: [exam_drill, mock_exam]
+                lesson_no:
+                  type: integer
+                  minimum: 1
+                  maximum: 3
+                score_visibility_mode:
+                  type: string
+                  enum: [teacher_only, student_visible]
+                  default: teacher_only
+      responses:
+        '201':
+          description: Created
+
+  /psle/oral/turns:
+    post:
+      summary: 提交口语输入并返回严格评分结果
+      operationId: scorePsleTurn
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PsleTurn'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PsleScoreResult'
+
+  /psle/oral/reports/{session_id}:
+    get:
+      summary: 获取 PSLE 冲刺报告
+      operationId: getPsleReport
+      parameters:
+        - in: path
+          name: session_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+
+  /dsa/research/runs:
+    post:
+      summary: 触发 DSA 资料采集任务
+      operationId: runDsaResearch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [cycle_year, track]
+              properties:
+                cycle_year:
+                  type: integer
+                track:
+                  type: string
+                  enum: [dsa_sec_art, dsa_sec_general]
+      responses:
+        '202':
+          description: Accepted
+
+  /dsa/research/reports:
+    get:
+      summary: 获取 DSA 年度趋势报告
+      operationId: getDsaTrendReport
+      parameters:
+        - in: query
+          name: cycle_year
+          required: true
+          schema:
+            type: integer
+        - in: query
+          name: school
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+
+components:
+  schemas:
+    PsleTurn:
+      type: object
+      required: [session_id, student_id, task_type, raw_audio_ref]
+      properties:
+        session_id:
+          type: string
+        student_id:
+          type: string
+        task_type:
+          type: string
+          enum: [reading_aloud, conversation]
+        raw_audio_ref:
+          type: string
+        transcript:
+          type: string
+        asr_confidence:
+          type: number
+          format: float
+
+    PsleScoreResult:
+      type: object
+      required: [total_score_50, strict_score_100, deductions, next_actions]
+      properties:
+        total_score_50:
+          type: number
+          format: float
+        strict_score_100:
+          type: number
+          format: float
+        deductions:
+          type: array
+          items:
+            type: object
+            required: [category, points, reason]
+            properties:
+              category:
+                type: string
+              points:
+                type: number
+                format: float
+              reason:
+                type: string
+        next_actions:
+          type: array
+          items:
+            type: string
