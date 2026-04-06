@@ -1,2 +1,5 @@
 ﻿deer-flow/
 ~$Risk_Assessment_Template_v2.xlsx
+__pycache__/
+*.pyc
+demo_fast_track_v1/local_demo/frontend/generated_options/

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Moyuan 山主题课堂 Demo</title>
+    <link rel="stylesheet" href="/frontend/styles.css" />
+  </head>
+  <body>
+    <div class="paper-grain" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <p class="topbar-kicker">Moyuan AI-native Classroom</p>
+      <h1>山的不同叫法</h1>
+      <p class="topbar-sub">导入 -> 选图 -> 说理由 -> AI反馈</p>
+    </header>
+
+    <main>
+      <section class="lesson-stage" aria-label="课堂主舞台">
+        <div class="stage-head">
+          <p class="stage-chip">当前阶段：<span id="lessonStageLabel">课前导入</span></p>
+          <div class="primary-actions">
+            <button id="beginInteractionBtn" type="button">进入选图互动</button>
+            <button id="restartBtn" class="secondary" type="button">重新开始</button>
+          </div>
+        </div>
+
+        <h2 id="lessonIntroTitle">今天我们来学习：山的不同叫法</h2>
+        <img id="lessonImage" alt="山主题课件" />
+        <p id="nodePrompt" class="node-prompt" aria-live="polite">加载中...</p>
+
+        <div id="optionGrid" class="option-grid hidden" aria-label="山形选项区"></div>
+
+        <p id="whyPrompt" class="why-prompt hidden" aria-live="polite"></p>
+
+        <section id="answerArea" class="answer-area hidden" aria-label="回答区">
+          <div class="voice-tools">
+            <button id="speechBtn" type="button">开始语音录入</button>
+          </div>
+
+          <div class="manual-input">
+            <label for="manualText" class="sr-only">手动输入孩子回答</label>
+            <input id="manualText" placeholder="语音不可用时可手动输入孩子回答" />
+            <button id="submitTextBtn" type="button">提交回答</button>
+          </div>
+        </section>
+
+        <section class="result-box" aria-label="课堂反馈区">
+          <div class="recognized-row">
+            <strong>识别结果：</strong>
+            <span id="recognizedText">-</span>
+          </div>
+
+          <article id="feedbackPanel" class="feedback-panel">
+            <p class="feedback-line"><strong>判断：</strong><span id="feedbackJudgement">-</span></p>
+            <p class="feedback-line"><strong>做得好：</strong><span id="feedbackStrengths">-</span></p>
+            <p class="feedback-line"><strong>要改进：</strong><span id="feedbackIssues">-</span></p>
+            <p class="feedback-line"><strong>建议句：</strong><span id="feedbackCorrection">-</span></p>
+            <p class="feedback-line"><strong>下一步：</strong><span id="feedbackNext">-</span></p>
+            <p class="feedback-line"><strong>鼓励：</strong><span id="feedbackEncourage">-</span></p>
+          </article>
+        </section>
+      </section>
+    </main>
+
+    <script src="/frontend/app.js"></script>
+  </body>
+</html>
